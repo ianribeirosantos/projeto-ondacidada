@@ -1,0 +1,43 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body{
+    box-sizing: border-box; /*ajuda um elemento a n sobrepor o outro*/
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+li, a, button{
+    font-size: 20px;
+    color: #193c6c;
+    text-decoration: none;
+}
+header{
+    display: flex; /*como organizo a estrutura*/
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px;
+    background-color: transparent;
+}
+
+.logotipo{
+    color: #193c6c;
+    font-size: 35px;
+    font-weight: bold;
+}
+.nav-links{
+    list-style: none;
+}
+.nav-links li{
+    display: inline-block; /*pra deixar eles na mesma linha*/
+    padding: 0px 20px;
+}
+.nav-links li a:hover{
+   color: #2d70ce 
+}
+
+@media (max-width: 800px){
+    li, a, button{
+    font-size: 14px;
+    }
+}
+             /*CASO TIVESSEM MAIS ELEMENTOS E PARA DEIXAR A TELA RESPANSIVA NO ECLL EU USARIA ESSE ACIMA PARA DMINUIR O TAM DA FONTE, sobrescrevendo a form anterior*/
