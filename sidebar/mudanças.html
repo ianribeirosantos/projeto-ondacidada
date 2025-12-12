@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impactos Locais - Mudanças Climáticas</title>
+    <link rel="stylesheet" href="../header/navbar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+    <style>
+        :root {
+            --color-text-dark: #e8e8e8;
+            --color-title-dark: #bcd4ff;
+            --color-bg-light: rgba(255, 255, 255, 0.1);
+            --color-card-bg: #eef3f7;
+            --color-card-border: #dae3ec;
+            --color-chart-darkest: #2a5293;
+            --color-chart-dark: #4d7cc9;
+            --color-chart-medium: #7fa8e8;
+            --color-chart-light: #9be6e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* REMOVEI O ESPAÇO GIGANTE DAQUI */
+        body {
+            background: linear-gradient(180deg, #001a33, #003d66, #005f99, #0080c9);
+            background-attachment: fixed;
+            color: var(--color-text-dark);
+            line-height: 1.6;
+        }
+
+        /* Ajuste para o header não parecer escuro demais */
+        header {
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(6px);
+        }
+
+        header .logotipo {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: white;
+        }
+
+        nav ul li a {
+            color: white !important;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .main-title {
+            text-align: center;
+            font-size: 2em;
+            color: var(--color-title-dark);
+            margin-bottom: 40px;
+        }
+
+        .awareness-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            flex: 1;
+            background-color: var(--color-card-bg);
+            border-radius: 15px;
+            padding: 20px 25px 30px;
+            text-align: center;
+            border: 1px solid var(--color-card-border);
+            min-height: 250px;
+            position: relative;
+        }
+
+        .card-icon {
+            font-size: 2.5em;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .charts-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            padding: 50px 20px;
+            margin-top: 40px;
+        }
+
+        .charts-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+        }
+
+        .chart-container {
+            flex: 1;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .chart-title {
+            color: #003d66;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 900px) {
+            .awareness-cards {
+                flex-direction: column;
+            }
+            .charts-wrapper {
+                flex-direction: column;
+            }
+        }
+        /* ======== CORRIGE TEXTO BRANCO NOS CARDS COM EMOJI ======== */
+
+/* Garante que o texto dentro de qualquer card fique escuro */
+.card, 
+.info-card, 
+.chart-card, 
+.emoji-card, 
+.emoji-box {
+    color: #0d1b2a !important;  /* azul escuro elegante */
+}
+
+/* Títulos dos cards */
+.card h3, 
+.info-card h3, 
+.chart-card h3, 
+.emoji-card h3 {
+    color: #0d1b2a !important;
+    font-weight: 700;
+}
+
+/* Parágrafos e descrições */
+.card p, 
+.info-card p, 
+.chart-card p, 
+.emoji-card p {
+    color: #0d1b2a !important;
+}
+
+/* Caso você use spans dentro dos cards */
+.card span,
+.info-card span,
+.emoji-card span {
+    color: #0d1b2a !important;
+}
+
+    </style>
+</head>
+
+<body>
+    
+
+    <header>
+        <span class="logotipo">Onda <br> Cidadã</span>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../sidebar/home.html">Home</a></li>
+                <li><a href="../sidebar/sobrenos.html">Sobre nós</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="main-title">
+            Entenda os impactos locais e descubra o que está sendo feito para proteger nosso litoral.
+        </h1>
+
+        <section class="awareness-cards">
+
+            <div class="card">
+                <div class="card-icon">🌊</div>
+                <p>Piedade e Candeias enfrentam forte erosão costeira, resultado das mudanças no clima e da ocupação desordenada.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🐟</div>
+                <p>A degradação dos manguezais em Jaboatão provoca a perda de biodiversidade e aumenta o risco de enchentes.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">♻️</div>
+                <p>Cada ação conta: o lixo que vai parar no rio aumenta os efeitos das mudanças climáticas em nossa cidade.</p>
+            </div>
+
+        </section>
+    </main>
+
+    <section class="charts-section">
+        <div class="charts-wrapper">
+
+            <div class="chart-container">
+                <h2 class="chart-title">Impermeabilização dos solos urbanos</h2>
+                <canvas id="impermeabilizacaoChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2 class="chart-title">Poluição dos rios</h2>
+                <canvas id="poluicaoChart"></canvas>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const impermeabilizacaoData = {
+            labels: ['Item 1','Item 2','Item 3','Item 4','Item 5','Item 6','Item 7','Item 8','Item 9','Item 10','Item 11','Item 12'],
+            datasets: [
+                { label:'Série 1', data:[1,5,8,12,10,15,18,14,11,7,5,3], backgroundColor:'rgba(155,230,224,0.7)' }
+            ]
+        };
+
+        const poluicaoData = {
+            labels: ['2020','2021','2022','2023','2024'],
+            datasets: [{
+                data: [45,60,85,100,125],
+                backgroundColor: ['#9be6e0','#7fa8e8','#4d7cc9','#2a5293','#1a335b']
+            }]
+        };
+
+        new Chart(document.getElementById("impermeabilizacaoChart"), {
+            type: "line",
+            data: impermeabilizacaoData
+        });
+
+        new Chart(document.getElementById("poluicaoChart"), {
+            type: "bar",
+            data: poluicaoData
+        });
+    </script>
+
+</body>
+</html>

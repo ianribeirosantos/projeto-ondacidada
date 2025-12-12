@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impactos Locais - Mudanças Climáticas</title>
+
+    <link rel="stylesheet" href="../header/navbar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ============================= */
+/*      SEU ESTILO ORIGINAL      */
+/* ============================= */
+
+:root {
+    --color-text-dark: #e8e8e8;
+    --color-title-dark: #bcd4ff;
+    --color-bg-light: rgba(255, 255, 255, 0.1);
+    --color-card-bg: #eef3f7;
+    --color-card-border: #dae3ec;
+    --color-chart-darkest: #2a5293;
+    --color-chart-dark: #4d7cc9;
+    --color-chart-medium: #7fa8e8;
+    --color-chart-light: #9be6e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(180deg, #001a33, #003d66, #005f99, #0080c9);
+    background-attachment: fixed;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+
+    /* Ajuste para encaixar a sidebar */
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ============================= */
+/*    ESTILOS DA BARRA LATERAL   */
+/* ============================= */
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #ade0f6;
+    height: 100vh;
+    border-radius: 0px 18px 18px 0px;
+    position: fixed;
+    min-width: 82px;
+    transition: all .5s;
+    z-index: 10;
+}
+
+#sidebar_content {
+    padding: 12px;
+}
+
+#user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+#user_avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
+}
+
+#side_items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.side-item {
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+}
+
+.side-item:hover:not(.active) {
+    background-color: #e3e9f7;
+}
+
+.side-item a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    text-decoration: none;
+}
+
+.item-description {
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: .6s;
+}
+
+#sidebar.open-sidebar {
+    min-width: 220px;
+}
+
+#sidebar.open-sidebar .item-description {
+    width: 150px;
+}
+
+#sidebar.open-sidebar .side-item a {
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#open_btn {
+    position: absolute;
+    top: 30px;
+    right: -10px;
+    background-color: #4f46e5;
+    color: #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    border: none;
+    cursor: pointer;
+}
+
+#open_btn_icon {
+    transition: .3s;
+}
+
+.open-sidebar #open_btn_icon {
+    transform: rotate(180deg);
+}
+
+/* ============================= */
+/*       AJUSTE DO CONTEÚDO      */
+/* ============================= */
+
+main {
+    width: 100%;
+    padding-left: 100px; /* espaço para sidebar fechada */
+    transition: .5s;
+}
+
+#sidebar.open-sidebar + main {
+    padding-left: 240px; /* espaço para sidebar aberta */
+}
+
+/* ============================= */
+/*   RESTANTE DO SEU CSS NORMAL  */
+/* ============================= */
+
+header {
+    padding: 15px 30px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+    margin-bottom: 20px;
+}
+
+header .logotipo {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 2em;
+    color: var(--color-title-dark);
+    margin-bottom: 40px;
+}
+
+.awareness-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.card {
+    flex: 1;
+    background-color: var(--color-card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--color-card-border);
+}
+
+.card-icon {
+    font-size: 2.5em;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.charts-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    padding: 50px 20px;
+}
+
+.charts-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+}
+
+.chart-container {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.chart-title {
+    color: #003d66;
+    margin-bottom: 15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- ============================ -->
+<!--         SIDEBAR FIXA         -->
+<!-- ============================ -->
+<nav id="sidebar">
+    <div id="sidebar_content">
+
+        <div id="user">
+            <img src="src/images/ondacidadalogo.png" id="user_avatar">
+            <div>
+                <span class="item-description">Onda Cidadã</span>
+                <span class="item-description">O projeto do Futuro</span>
+            </div>
+        </div>
+
+        <ul id="side_items">
+            <li class="side-item active">
+                <a href="#"><i class="fa-solid fa-fish-fins"></i><span class="item-description">Cultura Oceânica</span></a>
+            </li>
+
+            <li class="side-item">
+                <a href="#"><i class="fa-solid fa-water"></i><span class="item-description">Mudanças Climáticas</span></a>
+            </li>
+
+            <li class="side-item">
+                <a href="#"><i class="fa-solid fa-gamepad"></i><span class="item-description">Aprenda Jogando</span></a>
+            </li>
+        </ul>
+
+        <button id="open_btn">
+            <i id="open_btn_icon" class="fa-solid fa-chevron-right"></i>
+        </button>
+
+    </div>
+</nav>
+
+<!-- ============================ -->
+<!--       CONTEÚDO PRINCIPAL     -->
+<!-- ============================ -->
+<main>
+    <header>
+        <span class="logotipo">Onda <br> Cidadã</span>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Sobre nós</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <h1 class="main-title">
+            Entenda os impactos locais e descubra o que está sendo feito para proteger nosso litoral.
+        </h1>
+
+        <section class="awareness-cards">
+
+            <div class="card">
+                <div class="card-icon">🌊</div>
+                <p>Piedade e Candeias enfrentam forte erosão costeira...</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🐟</div>
+                <p>A degradação dos manguezais causa perda de biodiversidade...</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">♻️</div>
+                <p>Cada ação conta: o lixo que vai parar no rio piora o clima...</p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <section class="charts-section">
+        <div class="charts-wrapper">
+
+            <div class="chart-container">
+                <h2 class="chart-title">Impermeabilização dos solos urbanos</h2>
+                <canvas id="impermeabilizacaoChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2 class="chart-title">Poluição dos rios</h2>
+                <canvas id="poluicaoChart"></canvas>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================ -->
+<!--           JAVASCRIPT         -->
+<!-- ============================ -->
+<script>
+document.getElementById('open_btn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open-sidebar');
+});
+</script>
+
+<script>
+const impermeabilizacaoData = {
+    labels: ['Item 1','Item 2','Item 3','Item 4'],
+    datasets: [{ label: 'Série 1', data: [1,5,8,12], backgroundColor: '#9be6e0' }]
+};
+
+const poluicaoData = {
+    labels: ['2020','2021','2022','2023','2024'],
+    datasets: [{ data: [45,60,85,100,125], backgroundColor: ['#9be6e0','#7fa8e8','#4d7cc9','#2a5293','#1a335b'] }]
+};
+
+new Chart(document.getElementById("impermeabilizacaoChart"), { type: "line", data: impermeabilizacaoData });
+new Chart(document.getElementById("poluicaoChart"), { type: "bar", data: poluicaoData });
+</script>
+
+</body>
+</html>

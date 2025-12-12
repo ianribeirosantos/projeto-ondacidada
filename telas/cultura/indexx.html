@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <title>Onda Cidadã - Cultura Oceânica</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <style>
+    /* ---------- VARIÁVEIS ---------- */
+    :root{
+      --sidebar-closed: 82px;
+      --sidebar-open: 250px;
+      --sidebar-bg: #ade0f6;
+      --accent: #4f46e5;
+      --card-bg: rgba(255,255,255,0.9);
+    }
+
+    /* ---------- RESET ---------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background-image: url("imgscultura/bg4.jpg");
+      background-size: cover;
+      background-position: center;
+      
+      min-height:100vh;
+      transition: margin-left .35s ease;
+      /* margem inicial — quando a sidebar está fechada */
+      margin-left: var(--sidebar-closed);
+      color:#003c5d;
+    }
+
+    /* quando o body tiver esta classe, a sidebar está aberta */
+    body.sidebar-open{
+      margin-left: var(--sidebar-open);
+    }
+
+    /* ---------- SIDEBAR ---------- */
+    #sidebar{
+      position: fixed;
+      top:0;
+      left:0;
+      height:100vh;
+      width: var(--sidebar-closed);
+      background: var(--sidebar-bg);
+      border-radius: 0 18px 18px 0;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition: width .35s ease;
+      z-index: 50; /* acima do conteúdo para evitar que a barra fique sob o header */
+      overflow: hidden; /* para esconder textos quando fechada */
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    /* largura quando aberta */
+    body.sidebar-open #sidebar{
+      width: var(--sidebar-open);
+    }
+
+    #sidebar_content{padding:12px 14px 0 12px}
+
+    #user{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    #user_avatar{
+      width:50px;height:50px;border-radius:12px;object-fit:cover;
+      background:linear-gradient(180deg,#fff,#eee);display:block;
+      flex-shrink:0;
+    }
+    #user_infos{display:flex;flex-direction:column;gap:2px}
+    /* textos escondidos quando fechado */
+    .item-description{
+      display:inline-block;
+      vertical-align:middle;
+      opacity:0;
+      transform:translateX(-6px);
+      transition: opacity .28s, transform .28s;
+      font-size:14px;
+      white-space:nowrap;
+    }
+    body.sidebar-open .item-description{
+      opacity:1;
+      transform:none;
+    }
+
+    #side_items{list-style:none;display:flex;flex-direction:column;gap:8px;padding:12px 4px}
+    .side-item{border-radius:8px;padding:10px 8px;cursor:pointer;display:flex;align-items:center}
+    .side-item a{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;width:100%}
+    .side-item.active{background:var(--accent);color:#fff}
+    .side-item:not(.active):hover{background: rgba(0,0,0,0.04)}
+
+    /* botao de abrir/deslizar */
+    #open_btn{
+      position: absolute;
+      top: 14px;
+      right: -12px; /* fica um pouco fora para parecer botão flutuante */
+      width:28px;height:28px;border-radius:50%;
+      border:none;background:var(--accent);color:#fff;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;z-index:60;
+      box-shadow:0 6px 14px rgba(0,0,0,0.12);
+    }
+    #open_btn i{transition:transform .28s}
+    body.sidebar-open #open_btn i{transform:rotate(180deg)}
+
+    /* logout area */
+    #logout{border-top:1px solid rgba(0,0,0,0.06);padding:12px}
+    #logout_btn{background:transparent;border:none;width:100%;display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer}
+
+    /* ---------- CONTEÚDO PRINCIPAL ---------- */
+    .main-content{
+      width:100%;
+      padding:34px 36px;
+      transition: padding-left .35s;
+      /* não usar margin-left aqui — o body empurra tudo */
+    }
+
+    h1{
+      color: #fff;
+      font-size:34px;
+      text-align:center;
+      text-shadow:0 6px 18px rgba(0,0,0,0.35);
+      margin-bottom:18px;
+    }
+
+    .container{max-width:1200px;margin:0 auto}
+
+    /* ---------- CARDS ---------- */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+      gap:32px;
+      margin-top:18px;
+    }
+
+    .card{
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding:22px;
+      text-align:center;
+      text-decoration:none;
+      color: #003c5d;
+      transition:transform .22s, box-shadow .22s;
+      display:flex;flex-direction:column;align-items:center;gap:10px;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.12)}
+    .card img{width:200px;max-width:60%;height:auto;display:block;margin:0 auto}
+    .card h3{margin-top:6px;font-size:20px;color:#003c5d}
+
+    /* Responsividade - largura pequena */
+    @media (max-width:700px){
+      :root{--sidebar-open:200px}
+      body{margin-left: var(--sidebar-closed)}
+      body.sidebar-open{margin-left: var(--sidebar-open)}
+      h1{font-size:22px;text-align:left;padding-left:8px}
+      .main-content{padding:16px}
+      .card img{width:140px}
+    }
+    .menu {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+}
+  </style>
+</head>
+<body>
+    <div class="menu">
+    <a href="../../sidebar/home.html">HOME</a>
+    <a href="../../sidebar/sobrenos.html">SOBRE NÓS</a>
+</div>
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar" aria-label="Barra lateral do site">
+    <div id="sidebar_content">
+      <div id="user">
+        <!-- verifique o caminho src, se a imagem estiver em outra pasta ajuste -->
+        <img id="user_avatar" src="../../sidebar/src/images/ondacidadalogo.png" alt="Onda Cidadã — logo">
+        <div id="user_infos">
+          <span class="item-description">Onda Cidadã</span>
+          <span class="item-description" style="font-size:12px;color:#6b6b6b">O projeto do Futuro</span>
+        </div>
+      </div>
+
+      <ul id="side_items">
+        <li class="side-item active">
+          <a href="#">
+            <i class="fa-solid fa-fish-fins"></i>
+            <span class="item-description">Cultura Oceânica</span>
+          </a>
+        </li>
+
+        <li class="side-item">
+          <a href="../../sidebar/mudanças.html">
+            <i class="fa-solid fa-water"></i>
+            <span class="item-description">Mudanças Climáticas</span>
+          </a>
+        </li>
+
+        <li class="side-item">
+          <a href="#">
+            <i class="fa-solid fa-gamepad"></i>
+            <span class="item-description">Aprenda Jogando</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- botão flutuante (posicionado fora do fluxo normal) -->
+      <button id="open_btn" aria-label="Abrir/Fechar menu">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    
+  </nav>
+
+  <!-- CONTEUDO -->
+  <div class="main-content">
+    <div class="container">
+      <h1>Espécies em Extinção - Jaboatão dos Guararapes</h1>
+
+      <div class="cards">
+        <a class="card" href="peixe-cirurgiao.html" target="_blank">
+          <img src="imgscultura/cirurgiao.png" alt="Peixe Cirurgião">
+          <h3>Peixe-Cirurgião</h3>
+        </a>
+
+        <a class="card" href="anchova.html" target="_blank">
+          <img src="imgscultura/anchova.png" alt="Anchova">
+          <h3>Anchova</h3>
+        </a>
+
+        <a class="card" href="peixe-papagaio.html" target="_blank">
+          <img src="imgscultura/papagaio - Copia.png" alt="Peixe Papagaio">
+          <h3>Peixe-Papagaio</h3>
+        </a>
+
+        <a class="card" href="linguado.html" target="_blank">
+          <img src="imgscultura/linguado.png" alt="Linguado">
+          <h3>Linguado</h3>
+        </a>
+
+        <a class="card" href="pargo.html" target="_blank">
+          <img src="imgscultura/pargo.png" alt="Pargo">
+          <h3>Pargo</h3>
+        </a>
+        <a href="tartaruga-cabecuda.html" target="_blank" class="card">
+            <img src="imgscultura/tcabecuda.png">
+            <h3>Tartaruga-Cabeçuda</h3>
+        </a>
+
+        <a href="tartaruga-de-pente.html" target="_blank" class="card">
+            <img src="imgscultura/tpente.png">
+            <h3>Tartaruga-De-Pente</h3>
+        </a>
+
+        <a href="tartaruga-verde.html" target="_blank" class="card">
+            <img src="imgscultura/tverde.png">
+            <h3>Tartaruga-Verde</h3>
+        </a>
+
+        <a href="tartaruga-oliva.html" target="_blank" class="card">
+            <img src="imgscultura/toliva.png">
+            <h3>Tartaruga-Oliva</h3>
+        </a>
+
+        <a href="caranguejo-uca.html" target="_blank" class="card">
+            <img src="imgscultura/cuça.png">
+            <h3>Caranguejo-Uçá</h3>
+        </a>
+
+        <a href="siri-azul.html" target="_blank" class="card">
+            <img src="imgscultura/sazul.png">
+            <h3>Siri-Azul</h3>
+        </a>
+
+        <a href="camarao-branco.html" target="_blank" class="card">
+            <img src="imgscultura/cbranco.png">
+            <h3>Camarão-Branco</h3>
+        </a>
+
+        <a href="lagosta.html" target="_blank" class="card">
+            <img src="imgscultura/lagosta.png">
+            <h3>Lagosta-Comum</h3>
+        </a>
+
+        <a href="camarao-rosa.html" target="_blank" class="card">
+            <img src="imgscultura/crosa.png">
+            <h3>Camarão-Rosa</h3>
+        </a>
+
+
+        <!-- ... restante dos cards ... -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle tanto a sidebar quanto a margem do body (melhor controle)
+    const openBtn = document.getElementById('open_btn');
+    openBtn.addEventListener('click', () => {
+      document.body.classList.toggle('sidebar-open');
+    });
+
+    // Ajuste: se quiser que clique num item feche a sidebar em telas pequenas:
+    document.querySelectorAll('#side_items a').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        if(window.innerWidth <= 700) document.body.classList.remove('sidebar-open');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="sobrenos.css">
+    <title>Sobre Nós - IF</title>
+
+    <style>
+
+        :root {
+            --primary-blue: #00aaff;
+            --dark-blue: #003d66;
+            --light-bg: #f4f7f9;
+            --text-gray: #4a4a4a;
+        }
+
+        /* ==== FUNDO DEGRADÊ AZUL OCEÂNICO ==== */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--dark-blue);
+
+            background: linear-gradient(180deg, #001a33, #004080, #0080c9);
+            background-attachment: fixed;
+        }
+
+        /* ==== CONTAINER CENTRALIZADO ==== */
+        .about-us-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.15); /* leve transparência */
+            padding: 60px 0;
+            text-align: center;
+            backdrop-filter: blur(6px);
+        }
+
+        .content-wrapper {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;  /* <<< CENTRALIZA TUDO AQUI */
+        }
+
+        .title {
+            color: #ffffff;
+            font-size: 2.7em;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-shadow: 0px 0px 12px #00000055;
+        }
+
+        /* ==== MEMBROS CENTRALIZADOS ==== */
+        .team-members {
+            display: flex;
+            justify-content: center; /* <<< CENTRALIZA OS CARDS */
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap; /* ajuda no celular */
+        }
+
+        .member-card {
+            flex: 1;
+            max-width: 260px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            background-color: #e0f7ff;
+            border-radius: 50%;
+            border: 4px solid var(--primary-blue);
+            margin: 0 auto 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px #00000033;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-name {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .member-description {
+            font-size: 1em;
+            color: #e3e3e3;
+            line-height: 1.6;
+        }
+
+        .mission-statement {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 1.8;
+            margin-top: 40px;
+            padding: 30px 0;
+            border-top: 1px solid #ffffff33;
+            text-shadow: 0px 0px 6px #00000070;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span class="logotipo">Onda <br> Cidadã</span>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="#">Sobre nós</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="about-us-container">
+        <div class="content-wrapper">
+           
+            <div class="title">Sobre nós</div>
+
+            <div class="team-members">
+
+                <!-- Helena -->
+                <div class="member-card">
+                    <div class="profile-pic">
+                        <img src="images/helena.jpeg" alt="Foto de Helena">
+                    </div>
+                    <div class="member-name">Helena Medeiros</div>
+                    <div class="member-description">
+                        Designer principal, responsável por criar experiências visuais criativas e intuitivas.
+                    </div>
+                </div>
+
+                <!-- Ian -->
+                <div class="member-card">
+                    <div class="profile-pic">
+                        <img src="images/ian.jpeg" alt="Foto de Ian">
+                    </div>
+                    <div class="member-name">Ian Ribeiro</div>
+                    <div class="member-description">
+                        Programador principal, encarregado de transformar essas ideias em realidade por meio de código.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mission-statement">
+                Estudantes do IF trabalhando juntos em todas as etapas do projeto, unindo design e tecnologia para conscientizar e inspirar ações frente às mudanças climáticas e promover a cultura oceânica.
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

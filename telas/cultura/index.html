@@ -7,9 +7,100 @@
 
 
 <style>
+     /* ============================ BACKGROUND FULL SCREEN ============================ */
+        .sidebar-frame {
+            width: 250px; /* largura inicial */
+            height: 100vh;
+            border: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 10;
+        }
+
+        body {
+            margin-left: 250px; /* empurra conteúdo */
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("imgscultura/bg4.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        /* ============================ MENU ============================ */
+        .menu {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 60px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* ============================ CONTEÚDO DA PÁGINA ============================ */
+        .container {
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        /* ============================ NOVO MODELO DE CARD ============================ */
+        .cards {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.90);
+            border-radius: 25px;
+            padding: 20px;
+            transition: transform .25s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        .card img {
+            width: 200px; /* imagem maior */
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+        /* Nome */
+        .card h3 {
+            margin: 0;
+            color: #003c5d;
+            font-size: 20px;
+            font-weight: bold;
+        }
 /* ============================
    BACKGROUND FULL SCREEN
 ============================ */
+.sidebar-frame {
+    width: 82px; /* largura inicial */
+    height: 100vh;
+    border: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
+body {
+    margin-left: 82px; /* empurra conteúdo */
+    transition: margin-left .4s;
+}
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -91,10 +182,11 @@ body {
 
 
 
-<div class="sidebar">
-    <!-- ⬇ COLOQUE A LOGO AQUI ⬇ -->
+
+<!--<div class="sidebar">
+    <! ⬇ COLOQUE A LOGO AQUI ⬇ 
     <img class="logo" src="../imgs/ondacidadalogo.png">
-</div>
+</div>-->
 
 
 
@@ -181,6 +273,7 @@ body {
     </div>
 
 </div>
+
 
 
 </body>
